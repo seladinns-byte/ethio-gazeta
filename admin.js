@@ -4,6 +4,12 @@ import {
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+ getStorage,
+ ref,
+ uploadBytes,
+ getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHJeIgpqpcdlZJxm9LxMSN4pBKqRMmgNs",

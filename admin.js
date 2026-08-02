@@ -26,18 +26,27 @@ const storage = getStorage(app);
 window.addNews = async function () {
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
-
+const imageFile = document.getElementById("image").files[0];
   if (!title || !content) {
     alert("እባክህ ሁለቱንም መረጃዎች ሙላ።");
     return;
   }
 
-  try {
+  try {let imageUrl = "";
+
+if (imageFile) {
+  const imageRef = ref(storage, "newsImages/" + imageFile.name);
+
+  await uploadBytes(imageRef, imageFile);
+
+  imageUrl = await getDownloadURL(imageRef);
+}
     await addDoc(collection(db, "news"), {
-      title: title,
-      content: content,
-      createdAt: new Date()
-    });
+  title: title,
+  content: content,
+  image: imageUrl,
+  createdAt: new Date()
+});
 
     alert("✅ ዜናው በተሳካ ሁኔታ ተቀምጧል!");
 

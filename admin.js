@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const storage = getStorage(app);
 window.addNews = async function () {
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;

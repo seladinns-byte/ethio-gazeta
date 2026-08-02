@@ -37,6 +37,7 @@ newsBox.innerHTML = "";
       <div class="card">
         <h2>${data.title}</h2>
         <p>${data.content}</p>
+${data.image ? `<img src="${data.image}" width="300">` : ""}
       </div>
     `;
 

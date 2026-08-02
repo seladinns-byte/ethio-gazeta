@@ -24,6 +24,7 @@ const db = getFirestore(app);
 async function loadNews(){
 
   const newsBox = document.getElementById("news");
+newsBox.innerHTML = "";
 
   const querySnapshot = await getDocs(collection(db, "news"));
 

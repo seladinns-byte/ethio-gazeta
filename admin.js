@@ -17,6 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+console.log("ADMIN JS RUNNING");
 const cloudName = "b0x6dfaz";
 const uploadPreset = "ethio_news";
 
@@ -65,7 +66,7 @@ console.log(data);
 
   return data.secure_url;
 }
-window.addNews = async function () {
+window.addNews = async function () {console.log("BUTTON CLICKED");
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
 const imageFile = document.getElementById("image").files[0];

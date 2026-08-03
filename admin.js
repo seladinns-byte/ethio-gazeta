@@ -47,25 +47,26 @@ const imageFile = document.getElementById("image").files[0];
     return;
   }
 
-  try {let imageUrl = "";
+try {
 
-if (imageFile) {
-  imageUrl = await uploadImage(imageFile);
-}
-}
-    await addDoc(collection(db, "news"), {
-  title: title,
-  content: content,
-  image: imageUrl,
-  createdAt: new Date()
-});
+  let imageUrl = "";
 
-    alert("✅ ዜናው በተሳካ ሁኔታ ተቀምጧል!");
-
-    document.getElementById("title").value = "";
-    document.getElementById("content").value = "";
-
-  } catch (error) {
-    alert("ስህተት: " + error.message);
+  if (imageFile) {
+    imageUrl = await uploadImage(imageFile);
   }
-};
+
+  await addDoc(collection(db, "news"), {
+    title: title,
+    content: content,
+    image: imageUrl,
+    createdAt: new Date()
+  });
+
+  alert("✅ ዜናው በተሳካ ሁኔታ ተቀምጧል!");
+
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+
+} catch (error) {
+  alert("ስህተት: " + error.message);
+}

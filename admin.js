@@ -61,6 +61,8 @@ async function uploadImage(file){
 
   const data = await res.json();
 
+console.log(data);
+
   return data.secure_url;
 }
 window.addNews = async function () {

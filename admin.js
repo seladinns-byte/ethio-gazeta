@@ -70,3 +70,4 @@ try {
 } catch (error) {
   alert("ስህተት: " + error.message);
 }
+alert("admin.js ተጫኗል");

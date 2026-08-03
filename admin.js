@@ -4,12 +4,6 @@ import {
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-import {
- getStorage,
- ref,
- uploadBytes,
- getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHJeIgpqpcdlZJxm9LxMSN4pBKqRMmgNs",
@@ -22,7 +16,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app);
+const cloudName = "b0x6dfaz";
+const uploadPreset = "ethio_news";
+
+async function uploadImage(file){
+
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("upload_preset", uploadPreset);
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  const data = await res.json();
+
+  return data.secure_url;
+}
 window.addNews = async function () {
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
@@ -35,11 +50,8 @@ const imageFile = document.getElementById("image").files[0];
   try {let imageUrl = "";
 
 if (imageFile) {
-  const imageRef = ref(storage, "newsImages/" + imageFile.name);
-
-  await uploadBytes(imageRef, imageFile);
-
-  imageUrl = await getDownloadURL(imageRef);
+  imageUrl = await uploadImage(imageFile);
+}
 }
     await addDoc(collection(db, "news"), {
   title: title,

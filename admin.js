@@ -66,7 +66,7 @@ console.log(data);
 
   return data.secure_url;
 }
-window.addNews = async function () {console.log("BUTTON CLICKED");
+window.addNews = async function () alert("Button works!");
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
 const imageFile = document.getElementById("image").files[0];

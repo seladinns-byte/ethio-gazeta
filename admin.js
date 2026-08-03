@@ -35,6 +35,8 @@ async function uploadImage(file) {
 
   const data = await res.json();
 
+alert(JSON.stringify(data));
+
   if (!data.secure_url) {
     throw new Error("Image upload failed");
   }

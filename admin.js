@@ -6,7 +6,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBHJeIgpqpcdlZJxm9LxMSN4pBKqRMmgNs",
+  apiKey: "YOUR_API_KEY",
   authDomain: "ethio-gazeta.firebaseapp.com",
   projectId: "ethio-gazeta",
   storageBucket: "ethio-gazeta.firebasestorage.app",
@@ -17,68 +17,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const cloudName = "b0x6dfaz";
-const uploadPreset = "ethio_news";
-
-async function uploadImage(file) {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", uploadPreset);
-
-  const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    {
-      method: "POST",
-      body: formData
-    }
-  );
-
-  const data = await res.json();
-
-alert(JSON.stringify(data));
-
-  if (!data.secure_url) {
-    throw new Error("Image upload failed");
-  }
-
-  return data.secure_url;
-}
+window.welcome = function () {
+  alert("እንኳን ወደ Ethio Gazeta በደህና መጡ!");
+};
 
 window.addNews = async function () {
-
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
-  const imageFile = document.getElementById("image").files[0];
-
-  if (!title || !content) {
-    alert("እባክህ ርዕስና ዝርዝር ሙላ።");
-    return;
-  }
 
   try {
-
-    let imageUrl = "";
-
-    if (imageFile) {
-      imageUrl = await uploadImage(imageFile);
-    }
-
     await addDoc(collection(db, "news"), {
-      title,
-      content,
-      image: imageUrl,
+      title: title,
+      content: content,
       createdAt: new Date()
     });
 
-    alert("✅ ዜናው ተቀምጧል!");
+    alert("ዜናው ተቀምጧል!");
 
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
-    document.getElementById("image").value = "";
-
-  } catch (error) {
-    alert(error.message);
-    console.error(error);
+  } catch (e) {
+    alert("ስህተት: " + e.message);
   }
-
 };

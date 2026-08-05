@@ -62,7 +62,8 @@ window.addNews = async function () {
     if (imageFile) {
       imageUrl = await uploadImage(imageFile);
     }
-
+console.log("IMAGE URL =", imageUrl);
+alert(imageUrl);
     await addDoc(collection(db, "news"), {
       title,
       content,

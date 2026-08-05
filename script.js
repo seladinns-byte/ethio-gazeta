@@ -29,20 +29,24 @@ newsBox.innerHTML = "";
 
   const querySnapshot = await getDocs(collection(db, "news"));
 
-  querySnapshot.forEach((doc)=>{
+ 
+querySnapshot.forEach((doc)=>{
 
-    let data = doc.data();
+  let data = doc.data();
 
-    newsBox.innerHTML += `
-      <div class="card">
-        <h2>${data.title}</h2>
-        <p>${data.content}</p>
-${data.image ? `<img src="${data.image}" width="300">` : ""}
-      </div>
-    `;
+  newsBox.innerHTML += `
+    <div class="card">
 
-  });
+      ${data.image ? `<img src="${data.image}" width="300">` : ""}
 
+      <h2>${data.title}</h2>
+
+      <p>${data.content}</p>
+
+    </div>
+  `;
+
+});
 }
 
 loadNews();

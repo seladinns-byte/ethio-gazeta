@@ -69,6 +69,7 @@ window.addNews = async function () {
       image: imageUrl,
       createdAt: new Date()
     });
+console.log("Image URL:", imageUrl);
 
     alert("✅ ዜናው ተቀምጧል!");
 

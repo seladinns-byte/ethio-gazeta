@@ -40,3 +40,4 @@ window.addNews = async function () {
     alert("ስህተት: " + e.message);
   }
 };
+alert("admin.js ተጭኗል");

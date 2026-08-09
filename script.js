@@ -34,6 +34,8 @@ querySnapshot.forEach((doc)=>{
 
   let data = doc.data();
 
+console.log("IMAGE URL:", data.image);
+
   newsBox.innerHTML += `
     <div class="card">
 

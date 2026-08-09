@@ -21,34 +21,38 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-async function loadNews(){
-
+async function loadNews() {
   const newsBox = document.getElementById("news");
 
-newsBox.innerHTML = "";
+  newsBox.innerHTML = "";
 
   const querySnapshot = await getDocs(collection(db, "news"));
 
- 
-querySnapshot.forEach((doc)=>{
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
 
-  let data = doc.data();
+    newsBox.innerHTML += `
+      <article class="news-card">
 
-console.log("IMAGE URL:", data.image);
+        ${
+          data.image
+            ? `<img src="${data.image}" class="news-image" alt="${data.title}">`
+            : ""
+        }
 
-  newsBox.innerHTML += `
-    <div class="card">
+        <div class="news-content">
+          <h2>${data.title}</h2>
 
-      ${data.image ? `<img src="${data.image}" width="300">` : ""}
+          <p>${data.content}</p>
 
-      <h2>${data.title}</h2>
+          <button onclick="readNews('${doc.id}')">
+            ሙሉ ዜና አንብብ
+          </button>
+        </div>
 
-      <p>${data.content}</p>
-
-    </div>
-  `;
-
-});
+      </article>
+    `;
+  });
 }
 
 loadNews();

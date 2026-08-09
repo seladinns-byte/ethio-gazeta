@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -21,11 +22,13 @@ const cloudName = "b0x6dfaz";
 const uploadPreset = "ethio_news";
 
 async function uploadImage(file) {
+
   const formData = new FormData();
+
   formData.append("file", file);
   formData.append("upload_preset", uploadPreset);
 
-  const res = await fetch(
+  const response = await fetch(
     `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
     {
       method: "POST",
@@ -33,12 +36,10 @@ async function uploadImage(file) {
     }
   );
 
-  const data = await res.json();
-
-alert(JSON.stringify(data));
+  const data = await response.json();
 
   if (!data.secure_url) {
-    throw new Error("Image upload failed");
+    throw new Error("ፎቶው ወደ Cloudinary አልተላከም።");
   }
 
   return data.secure_url;
@@ -46,8 +47,8 @@ alert(JSON.stringify(data));
 
 window.addNews = async function () {
 
-  const title = document.getElementById("title").value;
-  const content = document.getElementById("content").value;
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
   const imageFile = document.getElementById("image").files[0];
 
   if (!title || !content) {
@@ -59,27 +60,30 @@ window.addNews = async function () {
 
     let imageUrl = "";
 
+    // ፎቶ ካለ
     if (imageFile) {
       imageUrl = await uploadImage(imageFile);
     }
-console.log("IMAGE URL =", imageUrl);
-alert(imageUrl);
+
+    // Firebase Firestore ላይ አስቀምጥ
     await addDoc(collection(db, "news"), {
-      title,
-      content,
+      title: title,
+      content: content,
       image: imageUrl,
       createdAt: new Date()
     });
 
-    alert("✅ ዜናው ተቀምጧል!");
+    alert("✅ ዜናው ከፎቶው ጋር ተቀምጧል!");
 
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
     document.getElementById("image").value = "";
 
   } catch (error) {
-    alert(error.message);
+
     console.error(error);
+    alert("❌ ስህተት: " + error.message);
+
   }
 
 };

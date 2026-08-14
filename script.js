@@ -146,7 +146,9 @@ window.searchNews = function () {
   displayNews(results);
 
 };
-
+window.readNews = function(id) {
+  window.location.href = `news.html?id=${id}`;
+};
 
 // ዜናዎችን ጀምር
 loadNews();

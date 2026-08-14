@@ -5,32 +5,38 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f5f5f5;
   color: #222;
 }
 
 /* Header */
+
 header {
-  background: #071a52;
+  background: #0b168c;
   color: white;
-  padding: 15px;
   text-align: center;
+  padding: 20px;
 }
 
 header img {
-  width: 110px;
-  height: auto;
+  width: 120px;
+  max-width: 80%;
 }
 
 header h1 {
-  margin: 8px 0;
-  font-size: 28px;
+  margin: 10px 0 5px;
 }
 
+header p {
+  margin: 0;
+}
+
+
 /* Navigation */
+
 nav {
-  background: #020d2d;
-  padding: 12px;
+  background: #111;
+  padding: 15px;
   text-align: center;
 }
 
@@ -45,27 +51,32 @@ nav a:hover {
   color: #ffd700;
 }
 
+
 /* Main */
+
 main {
   max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 15px;
+  margin: auto;
+  padding: 20px;
 }
 
 .section-title {
-  color: #071a52;
-  border-left: 5px solid #071a52;
-  padding-left: 10px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-/* News grid */
+
+/* News */
+
 #news {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
-/* News card */
+
+/* News Card */
+
 .card {
   background: white;
   border-radius: 10px;
@@ -76,46 +87,46 @@ main {
 
 .card img {
   width: 100%;
-  height: 190px;
+  height: 200px;
   object-fit: cover;
   display: block;
 }
 
 .card h2 {
   font-size: 20px;
-  margin: 12px;
-  color: #071a52;
+  margin: 15px;
 }
 
 .card p {
-  margin: 12px;
-  line-height: 1.6;
+  margin: 15px;
+  line-height: 1.7;
 }
 
-/* Read more button */
 .card button {
-  margin-left: 12px;
-  background: #071a52;
+  background: #0b168c;
   color: white;
   border: none;
-  padding: 9px 15px;
+  padding: 10px 15px;
+  margin-left: 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .card button:hover {
-  background: #0d2d87;
+  background: #050a5c;
 }
 
+
 /* Search */
+
 .search-box {
   text-align: center;
   margin: 30px 0;
 }
 
 .search-box input {
-  width: 70%;
-  max-width: 400px;
+  width: 280px;
+  max-width: 80%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -123,22 +134,28 @@ main {
 
 .search-box button {
   padding: 12px 18px;
-  background: #071a52;
-  color: white;
+  margin-left: 5px;
   border: none;
   border-radius: 5px;
+  background: #0b168c;
+  color: white;
+  cursor: pointer;
 }
 
+
 /* Footer */
+
 footer {
-  background: #020d2d;
+  background: #222;
   color: white;
   text-align: center;
   padding: 25px;
   margin-top: 40px;
 }
 
-/* Mobile */
+
+/* 📱 Mobile */
+
 @media (max-width: 700px) {
 
   #news {
@@ -147,14 +164,15 @@ footer {
 
   nav a {
     display: inline-block;
-    margin: 6px;
+    margin: 5px 7px;
   }
 
   .card img {
     height: 220px;
   }
 
-  .search-box input {
-    width: 65%;
+  main {
+    padding: 12px;
   }
+
 }

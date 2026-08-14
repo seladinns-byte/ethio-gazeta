@@ -9,6 +9,7 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyBHJeIgpqpcdlZJxm9LxMSN4pBKqRMmgNs",
   authDomain: "ethio-gazeta.firebaseapp.com",
@@ -18,11 +19,14 @@ const firebaseConfig = {
   appId: "1:395368229201:web:05659ac1de88b254164b70"
 };
 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
 const cloudName = "b0x6dfaz";
 const uploadPreset = "ethio_news";
+
 
 async function uploadImage(file) {
 
@@ -31,7 +35,7 @@ async function uploadImage(file) {
   formData.append("file", file);
   formData.append("upload_preset", uploadPreset);
 
-  const response = await fetch(
+  const res = await fetch(
     `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
     {
       method: "POST",
@@ -39,106 +43,165 @@ async function uploadImage(file) {
     }
   );
 
-  const data = await response.json();
+  const data = await res.json();
 
   if (!data.secure_url) {
-    throw new Error("ፎቶው ወደ Cloudinary አልተላከም።");
+    throw new Error("Image upload failed");
   }
 
   return data.secure_url;
 }
 
+
+/* ADD NEWS */
+
 window.addNews = async function () {
 
-  const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
-  const imageFile = document.getElementById("image").files[0];
+  const title =
+    document.getElementById("title").value.trim();
+
+  const content =
+    document.getElementById("content").value.trim();
+
+  const imageFile =
+    document.getElementById("image").files[0];
+
 
   if (!title || !content) {
+
     alert("እባክህ ርዕስና ዝርዝር ሙላ።");
+
     return;
   }
+
 
   try {
 
     let imageUrl = "";
 
-    // ፎቶ ካለ
+
     if (imageFile) {
+
       imageUrl = await uploadImage(imageFile);
+
     }
 
-    // Firebase Firestore ላይ አስቀምጥ
-    await addDoc(collection(db, "news"), {
-      title: title,
-      content: content,
-      image: imageUrl,
-      createdAt: new Date()
-    });
 
-    alert("✅ ዜናው ከፎቶው ጋር ተቀምጧል!");
+    await addDoc(
+      collection(db, "news"),
+      {
+        title: title,
+        content: content,
+        image: imageUrl,
+        createdAt: new Date()
+      }
+    );
+
+
+    alert("✅ ዜናው ተቀምጧል!");
+
 
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
     document.getElementById("image").value = "";
 
+
+    loadAdminNews();
+
+
   } catch (error) {
 
+    alert("❌ " + error.message);
+
     console.error(error);
-    alert("❌ ስህተት: " + error.message);
 
   }
 
 };
+
+
+/* LOAD NEWS */
+
 async function loadAdminNews() {
 
-  const newsBox = document.getElementById("news");
+  const newsBox =
+    document.getElementById("news");
 
-  if (!newsBox) return;
 
-  newsBox.innerHTML = "";
+  newsBox.innerHTML =
+    "<p>ዜናዎች እየጫኑ ነው...</p>";
 
-  const snapshot = await getDocs(
-    collection(db, "news")
-  );
 
-  snapshot.forEach((newsDoc) => {
+  try {
 
-    const data = newsDoc.data();
+    const snapshot =
+      await getDocs(
+        collection(db, "news")
+      );
 
-    newsBox.innerHTML += `
 
-      <div class="card">
+    newsBox.innerHTML = "";
 
-        ${
-          data.image
-          ? `<img src="${data.image}" width="250">`
-          : ""
-        }
 
-        <h2>${data.title}</h2>
+    snapshot.forEach((newsDoc) => {
 
-        <p>${data.content}</p>
+      const data = newsDoc.data();
 
-        <button onclick="deleteNews('${newsDoc.id}')">
-          🗑️ ሰርዝ
-        </button>
 
-      </div>
+      newsBox.innerHTML += `
 
-    `;
+        <div class="card">
 
-  });
+          ${
+            data.image
+            ? `<img
+                 src="${data.image}"
+                 width="250"
+                 alt="${data.title}">
+              `
+            : ""
+          }
+
+          <h2>${data.title}</h2>
+
+          <p>${data.content}</p>
+
+          <button
+            onclick="deleteNews('${newsDoc.id}')">
+            🗑️ ሰርዝ
+          </button>
+
+        </div>
+
+      `;
+
+    });
+
+
+  } catch (error) {
+
+    newsBox.innerHTML =
+      "<p>❌ ዜናዎችን ማምጣት አልተቻለም</p>";
+
+    console.error(error);
+
+  }
 
 }
 
 
-window.deleteNews = async function(id) {
+/* DELETE NEWS */
 
-  const confirmDelete =
+window.deleteNews = async function (id) {
+
+  const answer =
     confirm("ይህን ዜና ማጥፋት ትፈልጋለህ?");
 
-  if (!confirmDelete) return;
+
+  if (!answer) {
+    return;
+  }
+
 
   try {
 
@@ -146,17 +209,24 @@ window.deleteNews = async function(id) {
       doc(db, "news", id)
     );
 
+
     alert("✅ ዜናው ተሰርዟል!");
 
+
     loadAdminNews();
+
 
   } catch (error) {
 
     alert("❌ ስህተት: " + error.message);
 
+    console.error(error);
+
   }
 
 };
 
+
+/* START */
 
 loadAdminNews();

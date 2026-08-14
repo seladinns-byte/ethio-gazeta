@@ -18,41 +18,135 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 
+let allNews = [];
+
+
+// ዜናዎችን ከ Firebase ማምጣት
 async function loadNews() {
+
+  const newsBox = document.getElementById("news");
+
+  newsBox.innerHTML = "ዜናዎች እየጫኑ ነው...";
+
+  try {
+
+    const querySnapshot =
+      await getDocs(collection(db, "news"));
+
+    allNews = [];
+
+    querySnapshot.forEach((doc) => {
+
+      const data = doc.data();
+
+      allNews.push({
+        id: doc.id,
+        ...data
+      });
+
+    });
+
+    displayNews(allNews);
+
+  } catch (error) {
+
+    console.error(error);
+
+    newsBox.innerHTML =
+      "ዜናዎችን ማምጣት አልተቻለም።";
+
+  }
+}
+
+
+// ዜናዎችን ማሳየት
+function displayNews(newsList) {
+
   const newsBox = document.getElementById("news");
 
   newsBox.innerHTML = "";
 
-  const querySnapshot = await getDocs(collection(db, "news"));
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
+  if (newsList.length === 0) {
+
+    newsBox.innerHTML = "<p>ምንም ዜና አልተገኘም።</p>";
+
+    return;
+  }
+
+
+  newsList.forEach((data) => {
 
     newsBox.innerHTML += `
-      <article class="news-card">
+
+      <article class="card">
 
         ${
           data.image
-            ? `<img src="${data.image}" class="news-image" alt="${data.title}">`
-            : ""
+          ? `<img src="${data.image}" alt="${data.title}">`
+          : ""
         }
 
-        <div class="news-content">
-          <h2>${data.title}</h2>
+        <h2>${data.title || "ያለ ርዕስ"}</h2>
 
-          <p>${data.content}</p>
+        <p>${data.content || ""}</p>
 
-          <button onclick="readNews('${doc.id}')">
-            ሙሉ ዜና አንብብ
-          </button>
-        </div>
+        <button>
+          ተጨማሪ አንብብ
+        </button>
 
       </article>
+
     `;
+
   });
+
 }
 
+
+// Search
+window.searchNews = function () {
+
+  const input =
+    document.getElementById("searchInput");
+
+  const searchText =
+    input.value.toLowerCase().trim();
+
+
+  if (searchText === "") {
+
+    displayNews(allNews);
+
+    return;
+  }
+
+
+  const results = allNews.filter((news) => {
+
+    const title =
+      (news.title || "").toLowerCase();
+
+    const content =
+      (news.content || "").toLowerCase();
+
+
+    return (
+      title.includes(searchText) ||
+      content.includes(searchText)
+    );
+
+  });
+
+
+  displayNews(results);
+
+};
+
+
+// ዜናዎችን ጀምር
 loadNews();

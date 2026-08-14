@@ -5,45 +5,39 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f4f6f8;
   color: #222;
 }
 
 /* Header */
 header {
-  background: #111;
+  background: #071a52;
   color: white;
+  padding: 15px;
   text-align: center;
-  padding: 25px 15px;
 }
 
 header img {
-  width: 150px;
-  max-width: 80%;
+  width: 110px;
+  height: auto;
 }
 
 header h1 {
-  margin: 10px 0;
-  color: #ffd700;
-}
-
-header p {
-  margin: 5px 0;
+  margin: 8px 0;
+  font-size: 28px;
 }
 
 /* Navigation */
 nav {
-  background: #222;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  background: #020d2d;
   padding: 12px;
+  text-align: center;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 5px 15px;
+  margin: 0 12px;
   font-weight: bold;
 }
 
@@ -53,110 +47,114 @@ nav a:hover {
 
 /* Main */
 main {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 25px auto;
   padding: 0 15px;
 }
 
-main > h2 {
-  text-align: center;
-  color: #111;
+.section-title {
+  color: #071a52;
+  border-left: 5px solid #071a52;
+  padding-left: 10px;
 }
 
-/* News cards */
+/* News grid */
+#news {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* News card */
 .card {
   background: white;
   border-radius: 10px;
-  padding: 15px;
-  margin: 20px 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding-bottom: 15px;
 }
 
 .card img {
-  display: block;
   width: 100%;
-  max-width: 600px;
-  height: auto;
-  margin: 0 auto 15px;
-  border-radius: 8px;
+  height: 190px;
+  object-fit: cover;
+  display: block;
 }
 
 .card h2 {
-  color: #111;
+  font-size: 20px;
+  margin: 12px;
+  color: #071a52;
 }
 
 .card p {
-  line-height: 1.8;
+  margin: 12px;
+  line-height: 1.6;
 }
 
-/* Sections */
-section {
-  background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 10px;
+/* Read more button */
+.card button {
+  margin-left: 12px;
+  background: #071a52;
+  color: white;
+  border: none;
+  padding: 9px 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-section h2 {
-  color: #111;
+.card button:hover {
+  background: #0d2d87;
 }
 
 /* Search */
-.search {
+.search-box {
   text-align: center;
+  margin: 30px 0;
 }
 
-.search input {
+.search-box input {
   width: 70%;
   max-width: 400px;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
-button {
-  background: #111;
+.search-box button {
+  padding: 12px 18px;
+  background: #071a52;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #333;
+  border-radius: 5px;
 }
 
 /* Footer */
 footer {
-  background: #111;
+  background: #020d2d;
   color: white;
   text-align: center;
   padding: 25px;
   margin-top: 40px;
 }
 
-/* Phone */
-@media (max-width: 600px) {
+/* Mobile */
+@media (max-width: 700px) {
 
-  header h1 {
-    font-size: 26px;
+  #news {
+    grid-template-columns: 1fr;
   }
 
   nav a {
-    margin: 5px 8px;
-    font-size: 14px;
+    display: inline-block;
+    margin: 6px;
   }
 
-  main {
-    padding: 0 10px;
+  .card img {
+    height: 220px;
   }
 
-  .card {
-    padding: 12px;
-  }
-
-  .search input {
+  .search-box input {
     width: 65%;
   }
 }

@@ -90,3 +90,73 @@ window.addNews = async function () {
   }
 
 };
+async function loadAdminNews() {
+
+  const newsBox = document.getElementById("news");
+
+  if (!newsBox) return;
+
+  newsBox.innerHTML = "";
+
+  const snapshot = await getDocs(
+    collection(db, "news")
+  );
+
+  snapshot.forEach((newsDoc) => {
+
+    const data = newsDoc.data();
+
+    newsBox.innerHTML += `
+
+      <div class="card">
+
+        ${
+          data.image
+          ? `<img src="${data.image}" width="250">`
+          : ""
+        }
+
+        <h2>${data.title}</h2>
+
+        <p>${data.content}</p>
+
+        <button onclick="deleteNews('${newsDoc.id}')">
+          🗑️ ሰርዝ
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+window.deleteNews = async function(id) {
+
+  const confirmDelete =
+    confirm("ይህን ዜና ማጥፋት ትፈልጋለህ?");
+
+  if (!confirmDelete) return;
+
+  try {
+
+    await deleteDoc(
+      doc(db, "news", id)
+    );
+
+    alert("✅ ዜናው ተሰርዟል!");
+
+    loadAdminNews();
+
+  } catch (error) {
+
+    alert("❌ ስህተት: " + error.message);
+
+  }
+
+};
+
+
+loadAdminNews();

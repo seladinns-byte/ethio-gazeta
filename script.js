@@ -95,9 +95,9 @@ function displayNews(newsList) {
 
         <p>${data.content || ""}</p>
 
-        <button>
-          ተጨማሪ አንብብ
-        </button>
+        <button onclick="readNews('${data.id}')">
+  ተጨማሪ አንብብ
+</button>
 
       </article>
 

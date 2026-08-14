@@ -3,7 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
   <title>Ethio Gazeta</title>
 
@@ -14,80 +16,82 @@
 
   <!-- Header -->
   <header>
-    <img src="logo.png" width="180" alt="Ethio Gazeta Logo">
+
+    <img src="logo.jpg"
+         alt="Ethio Gazeta Logo">
 
     <h1>Ethio Gazeta</h1>
 
     <p>እውነተኛ ዜና ለሁሉም</p>
+
   </header>
 
 
   <!-- Navigation -->
   <nav>
+
     <a href="#">Home</a>
+
     <a href="#news">News</a>
+
     <a href="#">Sport</a>
+
     <a href="#">Technology</a>
+
     <a href="#">Contact</a>
+
   </nav>
 
 
   <!-- Main -->
   <main>
 
-    <h2>ዋና ዜናዎች</h2>
-
-    <!-- Firebase news will appear here -->
-    <div id="news"></div>
-
-
-    <!-- Sport -->
-    <section>
-      <h2>⚽ ስፖርት</h2>
-
-      <h3>Arsenal</h3>
-      <p>
-        የአርሰናል የቅርብ ጊዜ ዜና እዚህ ይታያል።
-      </p>
-
-      <h3>የኢትዮጵያ እግር ኳስ</h3>
-      <p>
-        የኢትዮጵያ ሊግ እና ብሔራዊ ቡድን ዜናዎች እዚህ ይታያሉ።
-      </p>
-    </section>
+    <h2 class="section-title">
+      ዋና ዜናዎች
+    </h2>
 
 
-    <!-- Technology -->
-    <section>
-      <h2>💻 ቴክኖሎጂ</h2>
+    <!-- Firebase News -->
+    <div id="news">
 
-      <p>
-        የቴክኖሎጂ ዜናዎች እዚህ ይታያሉ።
-      </p>
-    </section>
+      <!-- ዜናዎች ከ Firebase እዚህ ይመጣሉ -->
+
+    </div>
 
 
     <!-- Search -->
-    <section class="search">
+    <div class="search-box">
+
       <input
         type="text"
+        id="searchInput"
         placeholder="ዜና ፈልግ..."
       >
 
-      <button>ፈልግ</button>
-    </section>
+      <button onclick="searchNews()">
+        ፈልግ
+      </button>
+
+    </div>
 
   </main>
 
 
   <!-- Footer -->
   <footer>
+
     <p>© 2026 Ethio Gazeta</p>
+
     <p>እውነተኛ ዜና ለሁሉም</p>
+
   </footer>
 
 
-  <script type="module" src="script.js"></script>
+  <!-- JavaScript -->
+  <script
+    type="module"
+    src="script.js">
+  </script>
 
 </body>
 

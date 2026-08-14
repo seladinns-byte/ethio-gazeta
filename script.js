@@ -117,14 +117,10 @@ window.searchNews = function () {
   const searchText =
     input.value.toLowerCase().trim();
 
-
   if (searchText === "") {
-
     displayNews(allNews);
-
     return;
   }
-
 
   const results = allNews.filter((news) => {
 
@@ -134,7 +130,6 @@ window.searchNews = function () {
     const content =
       (news.content || "").toLowerCase();
 
-
     return (
       title.includes(searchText) ||
       content.includes(searchText)
@@ -142,13 +137,15 @@ window.searchNews = function () {
 
   });
 
-
   displayNews(results);
-
 };
+
+
+// ተጨማሪ አንብብ
 window.readNews = function(id) {
   window.location.href = `news.html?id=${id}`;
 };
+
 
 // ዜናዎችን ጀምር
 loadNews();

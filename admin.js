@@ -24,13 +24,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+// ===============================
+// NEWS LOAD
+// ===============================
+
 async function loadNews() {
 
   const newsBox = document.getElementById("news");
 
   newsBox.innerHTML = "";
 
-  const querySnapshot = await getDocs(collection(db, "news"));
+  const querySnapshot = await getDocs(
+    collection(db, "news")
+  );
 
 
   querySnapshot.forEach((newsDoc) => {
@@ -41,15 +47,21 @@ async function loadNews() {
 
       <div class="card">
 
-        ${data.image ? `<img src="${data.image}" width="300">` : ""}
+        ${
+          data.image
+          ? `<img src="${data.image}" width="300">`
+          : ""
+        }
 
-        <h2>${data.title}</h2>
+        <h2>${data.title || ""}</h2>
 
-        <p>${data.content}</p>
+        <p>${data.content || ""}</p>
 
-        <button onclick="editNews('${newsDoc.id}', '${data.title}', '${data.content}')">
+
+        <button onclick="editNews('${newsDoc.id}')">
           ✏️ አርትዕ
         </button>
+
 
         <button onclick="deleteNews('${newsDoc.id}')">
           🗑️ ሰርዝ
@@ -66,14 +78,23 @@ async function loadNews() {
 }
 
 
-// DELETE
+// ===============================
+// DELETE NEWS
+// ===============================
+
 window.deleteNews = async function(id) {
 
-  const confirmDelete = confirm("ይህን ዜና ለመሰረዝ እርግጠኛ ነህ?");
+  const confirmDelete = confirm(
+    "ይህን ዜና ለመሰረዝ እርግጠኛ ነህ?"
+  );
 
   if (!confirmDelete) return;
 
-  await deleteDoc(doc(db, "news", id));
+
+  await deleteDoc(
+    doc(db, "news", id)
+  );
+
 
   alert("ዜናው ተሰርዟል ✅");
 
@@ -82,32 +103,149 @@ window.deleteNews = async function(id) {
 };
 
 
-// EDIT
-window.editNews = async function(id, oldTitle, oldContent) {
+// ===============================
+// EDIT NEWS
+// ===============================
 
-  const newTitle = prompt("አዲስ ርዕስ አስገባ:", oldTitle);
+window.editNews = async function(id) {
 
-  if (newTitle === null) return;
+  // Get current news
+  const newsDoc = await getDocs(
+    collection(db, "news")
+  );
 
+  let oldData = null;
 
-  const newContent = prompt("አዲስ ዝርዝር አስገባ:", oldContent);
+  newsDoc.forEach((item) => {
 
-  if (newContent === null) return;
-
-
-  await updateDoc(doc(db, "news", id), {
-
-    title: newTitle,
-    content: newContent
+    if (item.id === id) {
+      oldData = item.data();
+    }
 
   });
 
 
+  if (!oldData) {
+    alert("ዜናው አልተገኘም ❌");
+    return;
+  }
+
+
+  // New title
+  const newTitle = prompt(
+    "አዲስ ርዕስ አስገባ:",
+    oldData.title || ""
+  );
+
+  if (newTitle === null) return;
+
+
+  // New content
+  const newContent = prompt(
+    "አዲስ ዝርዝር አስገባ:",
+    oldData.content || ""
+  );
+
+  if (newContent === null) return;
+
+
+  // ===============================
+  // IMAGE
+  // ===============================
+
+  const imageInput =
+    document.getElementById("image");
+
+  let imageUrl = oldData.image || "";
+
+
+  // If new image selected
+  if (imageInput && imageInput.files.length > 0) {
+
+    const file = imageInput.files[0];
+
+
+    const formData = new FormData();
+
+    formData.append(
+      "file",
+      file
+    );
+
+    formData.append(
+      "upload_preset",
+      "sw7igpwshvz70icugddzz"
+    );
+
+    formData.append(
+      "folder",
+      "ethio-news"
+    );
+
+
+    alert("ፎቶው እየተጫነ ነው... ⏳");
+
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/b0x6dfaz/image/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+
+    const result = await response.json();
+
+
+    if (!result.secure_url) {
+
+      alert("ፎቶው መጫን አልቻለም ❌");
+
+      return;
+
+    }
+
+
+    imageUrl = result.secure_url;
+
+  }
+
+
+  // ===============================
+  // UPDATE FIREBASE
+  // ===============================
+
+  await updateDoc(
+    doc(db, "news", id),
+    {
+
+      title: newTitle,
+
+      content: newContent,
+
+      image: imageUrl
+
+    }
+  );
+
+
+  // Clear image input
+  if (imageInput) {
+    imageInput.value = "";
+  }
+
+
   alert("ዜናው ተስተካክሏል ✅");
+
 
   loadNews();
 
 };
 
+
+// ===============================
+// START
+// ===============================
 
 loadNews();

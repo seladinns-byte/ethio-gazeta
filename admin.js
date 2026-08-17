@@ -22,6 +22,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 
 // ===============================
@@ -82,170 +83,60 @@ async function loadNews() {
 // DELETE NEWS
 // ===============================
 
-window.deleteNews = async function(id) {
-
-  const confirmDelete = confirm(
-    "ይህን ዜና ለመሰረዝ እርግጠኛ ነህ?"
-  );
-
-  if (!confirmDelete) return;
-
-
-  await deleteDoc(
-    doc(db, "news", id)
-  );
-
-
-  alert("ዜናው ተሰርዟል ✅");
-
-  loadNews();
-
-};
-
-
-// ===============================
-// EDIT NEWS
-// ===============================
-
 window.editNews = async function(id) {
 
-  // Get current news
-  const newsDoc = await getDocs(
-    collection(db, "news")
-  );
-
-  let oldData = null;
-
-  newsDoc.forEach((item) => {
-
-    if (item.id === id) {
-      oldData = item.data();
-    }
-
-  });
-
-
-  if (!oldData) {
-    alert("ዜናው አልተገኘም ❌");
-    return;
-  }
-
-
-  // New title
-  const newTitle = prompt(
-    "አዲስ ርዕስ አስገባ:",
-    oldData.title || ""
-  );
+  const newTitle = prompt("አዲስ ርዕስ አስገባ:");
 
   if (newTitle === null) return;
 
 
-  // New content
-  const newContent = prompt(
-    "አዲስ ዝርዝር አስገባ:",
-    oldData.content || ""
-  );
+  const newContent = prompt("አዲስ ዝርዝር አስገባ:");
 
   if (newContent === null) return;
 
 
-  // ===============================
-  // IMAGE
-  // ===============================
+  const imageInput = document.getElementById("image");
 
-  const imageInput =
-    document.getElementById("image");
-
-  let imageUrl = oldData.image || "";
+  const file = imageInput.files[0];
 
 
-  // If new image selected
-  if (imageInput && imageInput.files.length > 0) {
+  let updateData = {
 
-    const file = imageInput.files[0];
+    title: newTitle,
+    content: newContent
+
+  };
 
 
-    const formData = new FormData();
+  // አዲስ ፎቶ ከተመረጠ
+  if (file) {
 
-    formData.append(
-      "file",
-      file
+    const imageRef = ref(
+      storage,
+      "newsImages/" + id + "_" + file.name
     );
 
-    formData.append(
-      "upload_preset",
-      "sw7igpwshvz70icugddzz"
-    );
+    await uploadBytes(imageRef, file);
 
-    formData.append(
-      "folder",
-      "ethio-news"
-    );
+    const imageURL = await getDownloadURL(imageRef);
 
-
-    alert("ፎቶው እየተጫነ ነው... ⏳");
-
-
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/b0x6dfaz/image/upload",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
-
-
-    const result = await response.json();
-
-
-    if (!result.secure_url) {
-
-      alert("ፎቶው መጫን አልቻለም ❌");
-
-      return;
-
-    }
-
-
-    imageUrl = result.secure_url;
+    updateData.image = imageURL;
 
   }
 
-
-  // ===============================
-  // UPDATE FIREBASE
-  // ===============================
 
   await updateDoc(
     doc(db, "news", id),
-    {
-
-      title: newTitle,
-
-      content: newContent,
-
-      image: imageUrl
-
-    }
+    updateData
   );
-
-
-  // Clear image input
-  if (imageInput) {
-    imageInput.value = "";
-  }
 
 
   alert("ዜናው ተስተካክሏል ✅");
 
 
+  imageInput.value = "";
+
+
   loadNews();
 
 };
-
-
-// ===============================
-// START
-// ===============================
-
-loadNews();

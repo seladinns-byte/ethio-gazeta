@@ -22,75 +22,67 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+// URL ውስጥ ያለውን ID ማግኘት
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+
+// ዜናውን ከFirebase ማግኘት
 async function loadSingleNews() {
 
   const newsBox = document.getElementById("singleNews");
 
-  const params = new URLSearchParams(
-    window.location.search
-  );
 
-  const newsId = params.get("id");
+  if (!id) {
 
-
-  if (!newsId) {
-
-    newsBox.innerHTML =
-      "<p>የዜና ID አልተገኘም።</p>";
+    newsBox.innerHTML = "የዜና ID አልተገኘም ❌";
 
     return;
+
   }
 
 
-  try {
+  const newsRef = doc(db, "news", id);
 
-    const newsRef = doc(db, "news", newsId);
-
-    const newsDoc = await getDoc(newsRef);
+  const newsSnap = await getDoc(newsRef);
 
 
-    if (!newsDoc.exists()) {
+  if (!newsSnap.exists()) {
 
-      newsBox.innerHTML =
-        "<p>ይህ ዜና አልተገኘም።</p>";
+    newsBox.innerHTML = "ዜናው አልተገኘም ❌";
 
-      return;
-    }
+    return;
 
-
-    const data = newsDoc.data();
+  }
 
 
-    newsBox.innerHTML = `
+  const data = newsSnap.data();
 
-      <article class="card">
 
-        ${
-          data.image
-          ? `<img
-              src="${data.image}"
-              alt="${data.title}">
-            `
+  newsBox.innerHTML = `
+
+    <div class="card">
+
+      ${
+        data.image
+          ? `<img src="${data.image}" width="100%">`
           : ""
-        }
+      }
 
-        <h1>${data.title || "ያለ ርዕስ"}</h1>
+      <p>
+        <strong>
+          ${data.category || "ዋና ዜና"}
+        </strong>
+      </p>
 
-        <p>${data.content || ""}</p>
+      <h1>${data.title || ""}</h1>
 
-      </article>
+      <p>${data.content || ""}</p>
 
-    `;
+    </div>
 
-
-  } catch (error) {
-
-    console.error(error);
-
-    newsBox.innerHTML =
-      "<p>ዜናውን ማምጣት አልተቻለም።</p>";
-
-  }
+  `;
 
 }
 

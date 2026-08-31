@@ -3,9 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Ethio Gazeta Admin</title>
 
@@ -15,9 +13,10 @@
 <body>
 
   <h1>Ethio Gazeta Admin Panel</h1>
-<button onclick="logout()">
-  🚪 Logout
-</button>
+
+  <button onclick="logout()">
+    🚪 Logout
+  </button>
 
   <h2>አዲስ ዜና ጨምር</h2>
 
@@ -32,25 +31,23 @@
   <textarea
     id="content"
     placeholder="የዜና ዝርዝር">
- <br><br>
-
-<select id="category">
-
-  <option value="ዋና ዜና">📰 ዋና ዜና</option>
-
-  <option value="ስፖርት">⚽ ስፖርት</option>
-
-  <option value="ቴክኖሎጂ">💻 ቴክኖሎጂ</option>
-
-  <option value="ዓለም አቀፍ">🌍 ዓለም አቀፍ</option>
-
-</select>
-
-<br><br>
-  
   </textarea>
 
-  
+  <br><br>
+
+  <select id="category">
+
+    <option value="ዋና ዜና">📰 ዋና ዜና</option>
+
+    <option value="ስፖርት">⚽ ስፖርት</option>
+
+    <option value="ቴክኖሎጂ">💻 ቴክኖሎጂ</option>
+
+    <option value="ዓለም አቀፍ">🌍 ዓለም አቀፍ</option>
+
+  </select>
+
+  <br><br>
 
   <input
     id="image"
@@ -65,21 +62,19 @@
   </button>
 
   <hr>
-<input
-  type="text"
-  id="search"
-  placeholder="🔍 ዜና ፈልግ..."
-  oninput="searchNews()"
->
+
+  <input
+    type="text"
+    id="search"
+    placeholder="🔍 ዜና ፈልግ..."
+    oninput="searchNews()"
+  >
 
   <h2>የተቀመጡ ዜናዎች</h2>
 
   <div id="news"></div>
 
-  <script
-    type="module"
-    src="admin.js">
-  </script>
+  <script type="module" src="admin.js"></script>
 
 </body>
 

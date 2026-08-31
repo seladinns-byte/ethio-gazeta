@@ -118,14 +118,11 @@ const category = document.getElementById("category").value;
   await addDoc(
     collection(db, "news"),
     {
-
-      title: title,
-
-      content: content,
-
-      image: imageURL
-
-    }
+  title: title,
+  content: content,
+  category: category,
+  image: imageURL
+}
   );
 
   alert("ዜናው ተጨምሯል ✅");

@@ -178,3 +178,9 @@ window.filterNews = function (category) {
   });
 
 };
+window.readMore = function (id) {
+
+  window.location.href =
+    "news.html?id=" + id;
+
+};

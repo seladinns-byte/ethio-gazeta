@@ -128,7 +128,6 @@ const category = document.getElementById("category").value;
     }
   );
 
-
   alert("ዜናው ተጨምሯል ✅");
 
 

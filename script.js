@@ -149,3 +149,28 @@ window.readNews = function(id) {
 
 // ዜናዎችን ጀምር
 loadNews();
+window.filterNews = function (category) {
+
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card) => {
+
+    const categoryText =
+      card.querySelector("strong").innerText;
+
+    if (
+      category === "all" ||
+      categoryText === category
+    ) {
+
+      card.style.display = "block";
+
+    } else {
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+};

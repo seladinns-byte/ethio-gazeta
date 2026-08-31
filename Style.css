@@ -176,3 +176,29 @@ footer {
   }
 
 }
+#singleNews {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+#singleNews .card {
+  padding: 20px;
+}
+
+#singleNews img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#singleNews h1 {
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+#singleNews p {
+  font-size: 18px;
+  line-height: 1.8;
+}

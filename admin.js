@@ -166,7 +166,7 @@ async function loadNews() {
 
     newsBox.innerHTML += `
 
-      <div class="card">
+      <div class="card" data-category="${data.category || "ዋና ዜና"}">
 
         ${
           data.image

@@ -171,4 +171,21 @@ window.editNews = async function(id) {
 
   }
 
+};window.logout = async function () {
+
+  try {
+    await signOut(auth);
+
+    alert("Logout ተደርጓል ✅");
+
+    window.location.href = "login.html";
+
+  } catch (error) {
+
+    alert("Logout አልተሳካም ❌");
+
+    console.error(error);
+
+  }
+
 };

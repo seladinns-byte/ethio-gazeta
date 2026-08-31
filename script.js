@@ -155,15 +155,15 @@ window.filterNews = function (category) {
 
   cards.forEach((card) => {
 
-    const categoryText =
-      card.querySelector("strong").innerText;
+    const cardCategory =
+      card.dataset.category;
 
     if (
       category === "all" ||
-      categoryText === category
+      cardCategory === category
     ) {
 
-      card.style.display = "block";
+      card.style.display = "";
 
     } else {
 

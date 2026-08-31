@@ -123,7 +123,9 @@ const category = document.getElementById("category").value;
 
       content: content,
 
-      image: imageURL
+      image: imageURL,
+
+     category: category
 
     }
   );

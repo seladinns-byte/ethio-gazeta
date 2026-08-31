@@ -9,7 +9,8 @@ import {
   doc
 } import {
   getAuth,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -151,5 +152,23 @@ window.editNews = async function(id) {
 
 
   loadNews();
+
+};window.logout = async function () {
+
+  try {
+
+    await signOut(auth);
+
+    alert("Logout ተደርጓል ✅");
+
+    window.location.href = "login.html";
+
+  } catch (error) {
+
+    alert("Logout አልተሳካም ❌");
+
+    console.error(error);
+
+  }
 
 };

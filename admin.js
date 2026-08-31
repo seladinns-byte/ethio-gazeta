@@ -1,4 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
   getFirestore,
@@ -7,12 +8,23 @@ import {
   deleteDoc,
   updateDoc,
   doc
-} import {
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
   getAuth,
   onAuthStateChanged,
   signOut
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
 const firebaseConfig = {
@@ -26,16 +38,11 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, (user) => {
-
-  if (!user) {
-    window.location.href = "login.html";
-  }
-
-});
 const storage = getStorage(app);
 
 
@@ -91,6 +98,15 @@ async function loadNews() {
   });
 
 }
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+
+    window.location.href = "login.html";
+
+  }
+
+});
 
 
 // ===============================
@@ -157,23 +173,6 @@ window.editNews = async function(id) {
 
   try {
 
-    await signOut(auth);
-
-    alert("Logout ተደርጓል ✅");
-
-    window.location.href = "login.html";
-
-  } catch (error) {
-
-    alert("Logout አልተሳካም ❌");
-
-    console.error(error);
-
-  }
-
-};window.logout = async function () {
-
-  try {
     await signOut(auth);
 
     alert("Logout ተደርጓል ✅");

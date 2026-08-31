@@ -174,11 +174,12 @@ async function loadNews() {
             : ""
         }
       
-       <p><strong>${data.category || "ዋና ዜና"}</strong></p>
 
-        <h2>${data.title || ""}</h2>
+    <p><strong>${data.category || "ዋና ዜና"}</strong></p>
 
-        <p>${data.content || ""}</p>
+    <h2>${data.title || ""}</h2>
+
+    <p>${data.content || ""}</p>
 
 
         <button onclick="editNews('${newsDoc.id}')">

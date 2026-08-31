@@ -176,6 +176,8 @@ async function loadNews() {
             ? `<img src="${data.image}" width="300">`
             : ""
         }
+      
+       <p><strong>${data.category || "ዋና ዜና"}</strong></p>
 
         <h2>${data.title || ""}</h2>
 

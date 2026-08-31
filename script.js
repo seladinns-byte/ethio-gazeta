@@ -92,6 +92,10 @@ function displayNews(newsList) {
         }
 
         <h2>${data.title || "ያለ ርዕስ"}</h2>
+       
+        <button onclick="readMore('${newsDoc.id}')">
+  ተጨማሪ አንብብ
+</button>
 
         <p>${data.content || ""}</p>
 

@@ -1,5 +1,4 @@
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
   getFirestore,
@@ -8,34 +7,20 @@ import {
   deleteDoc,
   updateDoc,
   doc
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 import {
   getAuth,
   onAuthStateChanged,
   signOut
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBHJeIgpqpcdlZJxm9LxMSN4pBKqRMmgNs",
-  authDomain: "ethio-gazeta.firebaseapp.com",
-  projectId: "ethio-gazeta",
-  storageBucket: "ethio-gazeta.firebasestorage.app",
-  messagingSenderId: "395368229201",
-  appId: "1:395368229201:web:05659ac1de88b254164b70"
-};
-
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const app = initializeApp(firebaseConfig);
 

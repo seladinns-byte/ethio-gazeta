@@ -264,6 +264,40 @@ window.editNews = async function (id) {
   loadNews();
 
 };
+window.searchNews = function () {
+
+  const searchText =
+    document.getElementById("search").value.toLowerCase();
+
+  const cards =
+    document.querySelectorAll(".card");
+
+
+  cards.forEach((card) => {
+
+    const title =
+      card.querySelector("h2").innerText.toLowerCase();
+
+    const content =
+      card.querySelector("p").innerText.toLowerCase();
+
+
+    if (
+      title.includes(searchText) ||
+      content.includes(searchText)
+    ) {
+
+      card.style.display = "block";
+
+    } else {
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+};
 
 
 loadNews();

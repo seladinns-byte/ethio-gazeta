@@ -7,7 +7,11 @@ import {
   deleteDoc,
   updateDoc,
   doc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -22,6 +26,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+
+});
 const storage = getStorage(app);
 
 
